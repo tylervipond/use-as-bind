@@ -7,41 +7,37 @@
 ## Install
 
 ```bash
-npm install --save use-as-bind
+npm install react as-bind use-as-bind
 ```
 
 ## Basic Usage
 
 ```tsx
-import * as React from "react";
+import * as React from 'react'
 
-import { useAsBind } from "use-as-bind";
-
-const useMyWasm = connectWasm("");
+import { useAsBind } from 'use-as-bind'
 
 const Example = () => {
-  const { loaded, instance, error } = useAsBind("path/to/wasm.wasm");
+  const wasm = useAsBind('path/to/wasm.wasm');
   return (
     <div>
-      {loaded && instance.exports.exampleFunction()}
-      {error && error.message}
+      {wasm.loaded && wasm.instance.exports.exampleFunction()}
+      {wasm.error && wasm.error.message}
     </div>
-  );
-};
+  )
+}
 ```
 
 ## API
-
 useAsBind takes two arguments:
 
 `useAsBind(source, options)`
 
-**_source_** - `string | WebAssembly.Module | BufferSource | Response | PromiseLike<WebAssembly.Module>` -
-The source of the WebAssembly to be loaded. When a string is passed in it should be a url to a `.wasm` file which will be fetched and then instantiated. For non-string types check out the [as-bind docs for instantiate](https://github.com/torch2424/as-bind#instantiate)
+***source*** - `string | WebAssembly.Module | BufferSource | Response | PromiseLike<WebAssembly.Module>` - 
+The source of the WebAssembly to be loaded. When a string is passed in it should be a url to a `.wasm` file which will be fetched and then instantiated. For non-string types check out the [as-bind docs for instantiate](https://github.com/torch2424/as-bind#instantiate) 
 
-**_options_** - `Object` - An object that contains options to be used with as-bind and internally within the hook:
-
-- _imports_ - `Object` - An object of references to be made available to the loaded WASM file. For more information check out the [as-bind docs for importObject](https://github.com/torch2424/as-bind#importobject)
+***options*** - `Object` - An object that contains options to be used with as-bind and internally within the hook:
+- *imports* - `Object` - An object of references to be made available to the loaded WASM file. For more information check out the [as-bind docs for importObject](https://github.com/torch2424/as-bind#importobject)
 
 ## License
 
