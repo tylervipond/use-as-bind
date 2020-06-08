@@ -64,6 +64,6 @@ export const useAsBind = <E, I>(
     return function cleanup() {
       abortController.abort();
     };
-  }, []);
+  }, [source, options]);
   return state;
 };
