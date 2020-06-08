@@ -1,6 +1,6 @@
 # use-as-bind
 
-> React Hook for using [as-bind](https://github.com/torch2424/as-bind) with a wasm source
+> React Hook for using [as-bind](https://github.com/torch2424/as-bind) with a WASM source
 
 [![NPM](https://img.shields.io/npm/v/use-as-bind.svg)](https://www.npmjs.com/package/use-as-bind) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
