@@ -24,7 +24,7 @@ declare module "as-bind" {
     [K: keyof T]: AsBindBoundFunction<FunctionProperties<T>[K]>;
   }
   export interface AsBindBoundObject<T>
-    extends NonFunctionProperties<T>,
+    extends NonFunctionProperties<AsBindBoundObject<T>>,
       AsBindBoundFunctions<T> {}
 
   export interface AsBindInstance<E, I> {
