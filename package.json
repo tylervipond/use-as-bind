@@ -35,6 +35,7 @@
     "as-bind": "^0.3.4",
     "cross-env": "^5.2.0",
     "gh-pages": "^2.0.1",
+    "jest-fetch-mock": "^3.0.3",
     "react": "^16.9.0",
     "react-scripts": "^3.4.0",
     "react-test-renderer": "^16.9.0",

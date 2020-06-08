@@ -36,12 +36,8 @@ useAsBind takes two arguments:
 *source* - `string | WebAssembly.Module | BufferSource | Response | PromiseLike<WebAssembly.Module>` - 
 The source of the WebAssembly to be loaded. When a string is passed in it should be a url to a `.wasm` file which will be fetched and then instantiated. For non-string types check out the [as-bind docs for instantiate](https://github.com/torch2424/as-bind#instantiate) 
 
-*imports* -`Object` - 
+*options* -`Object` - 
 An object that contains functions to be imported. For more information check out the [as-bind docs for importObject](https://github.com/torch2424/as-bind#importobject)
-
-## Thank You
-
-Thank you to [Aaron Turner](https://github.com/torch2424) for [as-bind](https://github.com/torch2424/as-bind) and to [Herman Starikov](https://github.com/Hermanya) for [create-react-hook](https://github.com/hermanya/create-react-hook).
 
 ## License
 

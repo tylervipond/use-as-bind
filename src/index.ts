@@ -1,20 +1,10 @@
 import { useEffect, useState } from "react";
-import { AsBind } from "as-bind";
+import { AsBind, AsBindInstance } from "as-bind";
 
-export interface AsBindInstance<T> {
-  exports: T;
-  unboundExports: T;
-  importObjects: any;
-  enableExportFunctionTypeCaching: () => void;
-  disableExportFunctionTypeCaching: () => void;
-  enableImportFunctionTypeCaching: () => void;
-  disableImportFunctionTypeCaching: () => void;
-}
-
-export interface UseAsBindState<T = Object> {
+export interface UseAsBindState<E = Object, I = Object> {
   loaded: boolean;
   error: Error | null;
-  instance: AsBindInstance<T> | null;
+  instance: AsBindInstance<E, I> | null;
 }
 
 export interface UseAsBindOptions {
@@ -25,39 +15,55 @@ const DEFAULT_OPTIONS = {
   imports: {},
 };
 
-export const useAsBind = <T>(
+const fetchWasm = async (
+  path: string,
+  abortSignal: AbortSignal
+): Promise<Response> => {
+  let response = await globalThis.fetch(path, { signal: abortSignal });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch resource ${path}.`);
+  }
+  return response;
+};
+
+export const useAsBind = <E, I>(
   source:
     | string
     | WebAssembly.Module
     | BufferSource
     | Response
     | PromiseLike<WebAssembly.Module>,
-  options: { [key: string]: any } = DEFAULT_OPTIONS
-): UseAsBindState<T> => {
-  const [state, setState] = useState<UseAsBindState<T>>({
+  options: UseAsBindOptions = DEFAULT_OPTIONS
+): UseAsBindState<E, I> => {
+  const [state, setState] = useState<UseAsBindState<E, I>>({
     loaded: false,
     error: null,
     instance: null,
   });
-  const abortController = new AbortController();
   useEffect(() => {
+    const abortController = new AbortController();
     const bindWasm = async () => {
       try {
-        const instance: AsBindInstance<T> = await AsBind.instantiate(
-          typeof source === "string" ? fetch(source) : source,
+        const resolvedSource = await (typeof source === "string"
+          ? fetchWasm(source, abortController.signal)
+          : source);
+        const instance = await AsBind.instantiate<E, I>(
+          resolvedSource,
           options.imports
         );
-        setState({ loaded: true, instance, error: null });
+        if (!abortController.signal.aborted) {
+          setState({ loaded: true, instance, error: null });
+        }
       } catch (e) {
         if (!abortController.signal.aborted) {
           setState({ ...state, error: e });
         }
       }
-      return () => {
-        abortController.abort();
-      };
     };
     bindWasm();
+    return function cleanup() {
+      abortController.abort();
+    };
   }, []);
   return state;
 };
