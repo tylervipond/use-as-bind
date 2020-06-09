@@ -1,0 +1,29 @@
+name: npm-publish
+on:
+  push:
+    branches:
+      - master
+jobs:
+  npm-publish:
+    name: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+    - name: Install
+      run: npm i
+    - name: Build
+      run: npm run build
+    - name: Test
+      run: npm run test
+    - name: Publish if version has been updated
+      uses: pascalgn/npm-publish-action@4f4bf159e299f65d21cd1cbd96fc5d53228036df
+      with:
+        commit_pattern: "^Release (\\S+)"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
