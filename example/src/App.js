@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
 
-import { useMyHook } from 'use-as-bind'
+import { useAsBind } from "use-as-bind";
 
 const App = () => {
-  const example = useMyHook()
+  const { loaded, instance, error } = useAsBind("example.wasm");
   return (
     <div>
-      {example}
+      {loaded && instance.exports.addString("hello", "wasm")}
+      {error && error.message}
     </div>
-  )
-}
-export default App
+  );
+};
+export default App;

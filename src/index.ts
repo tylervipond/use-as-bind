@@ -67,3 +67,13 @@ export const useAsBind = <E, I>(
   }, [source, options]);
   return state;
 };
+
+export const createAsBindHook = <E, I>(
+  source:
+    | string
+    | WebAssembly.Module
+    | BufferSource
+    | Response
+    | PromiseLike<WebAssembly.Module>,
+  options: UseAsBindOptions = DEFAULT_OPTIONS
+) => () => useAsBind<E, I>(source, options);
