@@ -1,6 +1,6 @@
 {
   "name": "use-as-bind",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "React Hook for using as-bind with a wasm source",
   "author": "tylervipond",
   "license": "MIT",
