@@ -1,13 +1,14 @@
 {
   "name": "use-as-bind-example",
-  "homepage": "https://tylervipond.github.io/use-as-bind",
+  "homepage": "https://tylervipond.github.io/",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "as-bind": "^0.4.0",
     "react": "file:../node_modules/react",
     "react-dom": "^16.9.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^3.4.2",
     "use-as-bind": "file:.."
   },
   "scripts": {
